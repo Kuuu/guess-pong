@@ -8,6 +8,7 @@ TagManager:
   - wall
   - leftGoal
   - rightGoal
+  - corner
   layers:
   - Default
   - TransparentFX

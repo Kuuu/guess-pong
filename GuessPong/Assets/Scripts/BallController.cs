@@ -11,7 +11,7 @@ public class BallController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
-        startVelocity = new Vector2(200f, 50f);
+        startVelocity = new Vector2(Random.Range(150f, 300f), Random.Range(0, 100f));
         currentVelocity = startVelocity;
     }
 	
