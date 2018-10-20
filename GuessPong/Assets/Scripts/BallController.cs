@@ -27,16 +27,25 @@ public class BallController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision..");
 
         if (collision.collider.CompareTag("bat"))
         {
-            Debug.Log("..Collision with bat");
-            currentVelocity = new Vector2(-currentVelocity.x, currentVelocity.y);
+            float addVelocity = collision.collider.GetComponent<Rigidbody2D>().velocity.y * 20;
+            Debug.Log(addVelocity);
+            currentVelocity = new Vector2(-currentVelocity.x, currentVelocity.y + addVelocity);
+
         } else if (collision.collider.CompareTag("wall"))
         {
-            Debug.Log("..Collision with wall");
             currentVelocity = new Vector2(currentVelocity.x, -currentVelocity.y);
+
+
+        } else if (collision.collider.CompareTag("leftGoal"))
+        {
+            GameController.Instance.AnnounceWinner("Right");
+
+        } else if (collision.collider.CompareTag("rightGoal"))
+        {
+            GameController.Instance.AnnounceWinner("Left");
         }
     }
 }
