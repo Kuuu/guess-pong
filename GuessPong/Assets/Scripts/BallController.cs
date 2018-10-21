@@ -8,12 +8,21 @@ public class BallController : MonoBehaviour {
     private Vector2 currentVelocity;
     private Vector2 startVelocity;
     private string side;
+    private SpriteRenderer sprite;
+    private bool headingRight;
+    private float colorLerpStart;
+
+    public Color leftColor;
+    public Color rightColor;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
         startVelocity = new Vector2(Random.Range(150f, 300f), Random.Range(0, 100f));
         currentVelocity = startVelocity;
+        headingRight = currentVelocity.x > 0;
+        colorLerpStart = transform.position.x;
     }
 	
 	// Update is called once per frame
@@ -25,7 +34,12 @@ public class BallController : MonoBehaviour {
         {
             side = "Left";
         }
-	}
+
+        if (headingRight)
+            sprite.color = Color.Lerp(leftColor, rightColor, 1 - transform.position.x / colorLerpStart);
+        else
+            sprite.color = Color.Lerp(rightColor, leftColor, 1 - transform.position.x / colorLerpStart);
+    }
 
     private void FixedUpdate()
     {
@@ -38,8 +52,9 @@ public class BallController : MonoBehaviour {
         if (collision.collider.CompareTag("bat"))
         {
             float addVelocity = collision.collider.GetComponent<Rigidbody2D>().velocity.y * 20;
-            Debug.Log(addVelocity);
             currentVelocity = new Vector2(-currentVelocity.x, currentVelocity.y + addVelocity);
+            headingRight = !headingRight;
+            colorLerpStart = transform.position.x;
 
         } else if (collision.collider.CompareTag("wall"))
         {
