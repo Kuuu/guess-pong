@@ -7,6 +7,7 @@ public class BallController : MonoBehaviour {
     private Rigidbody2D rb;
     private Vector2 currentVelocity;
     private Vector2 startVelocity;
+    private string side;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +18,13 @@ public class BallController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (transform.position.x > 0)
+        {
+            side = "Right";
+        } else
+        {
+            side = "Left";
+        }
 	}
 
     private void FixedUpdate()
@@ -47,5 +54,10 @@ public class BallController : MonoBehaviour {
         {
             GameController.Instance.AnnounceWinner("Left");
         }
+    }
+
+    public string GetSide()
+    {
+        return side;
     }
 }

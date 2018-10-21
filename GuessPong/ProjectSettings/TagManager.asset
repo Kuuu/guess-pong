@@ -9,6 +9,7 @@ TagManager:
   - leftGoal
   - rightGoal
   - corner
+  - ball
   layers:
   - Default
   - TransparentFX

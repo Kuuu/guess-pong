@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
     public Text winnerLabel;
     public Text restartLabel;
 
+    public BallController ballController;
+
     public static GameController Instance;
 
     private void Awake()

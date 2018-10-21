@@ -11,7 +11,7 @@ public class BatController : MonoBehaviour {
     private float movement = 0;
 
     private bool isFrozen = false;
-    private bool returning = false;
+    //private bool returning = false;
 
 
 	// Use this for initialization
@@ -23,24 +23,13 @@ public class BatController : MonoBehaviour {
 	void Update () {
         if (!isFrozen)
         {
-            movement = Input.GetAxisRaw(side + "Move");
+            if (GameController.Instance.ballController.GetSide() != side)
+            {
+                movement = Input.GetAxisRaw(side + "Move");
+            }
             if (movement != 0)
             {
                 isFrozen = true;
-                returning = false;
-            }
-        } else if (returning)
-        {
-            if (movement > 0 && transform.position.y >= 0)
-            {
-                movement = 0;
-                isFrozen = false;
-                returning = false;
-            } else if (movement < 0 && transform.position.y <= 0)
-            {
-                movement = 0;
-                isFrozen = false;
-                returning = false;
             }
         }
 	}
@@ -55,7 +44,10 @@ public class BatController : MonoBehaviour {
         if (collision.collider.CompareTag("corner"))
         {
             movement = -movement;
-            returning = true;
+        } else if (collision.collider.CompareTag("ball"))
+        {
+            movement = 0;
+            isFrozen = false;
         }
     }
 }
